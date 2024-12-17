@@ -1,10 +1,10 @@
-import { sqliteTable, text, integer, real, uniqueIndex, primaryKey } from 'drizzle-orm/sqlite-core';
+import { sqliteTable, text, integer, real, uniqueIndex } from 'drizzle-orm/sqlite-core';
 import { sql } from 'drizzle-orm';
 
 export const users = sqliteTable(
 	'users',
 	{
-		id: text('id').primaryKey(),
+		id: integer('id').primaryKey({ autoIncrement: true }).unique(),
 		email: text('email').unique().notNull(),
 		name: text('name'),
 		image: text('image'),
@@ -22,7 +22,7 @@ export const users = sqliteTable(
 );
 
 export const groups = sqliteTable('groups', {
-	id: text('id').primaryKey(),
+	id: integer('id').primaryKey({ autoIncrement: true }).unique(),
 	name: text('name').notNull(),
 	inviteCode: text('invite_code').unique().notNull(),
 	createdAt: text('created_at')
@@ -36,11 +36,11 @@ export const groups = sqliteTable('groups', {
 export const groupMembers = sqliteTable(
 	'group_members',
 	{
-		id: text('id').primaryKey(),
-		userId: text('user_id')
+		id: integer('id').primaryKey({ autoIncrement: true }).unique(),
+		userId: integer('user_id')
 			.notNull()
 			.references(() => users.id),
-		groupId: text('group_id')
+		groupId: integer('group_id')
 			.notNull()
 			.references(() => groups.id),
 		role: text('role', { enum: ['member', 'admin'] })
@@ -56,8 +56,8 @@ export const groupMembers = sqliteTable(
 );
 
 export const restaurants = sqliteTable('restaurants', {
-	id: text('id').primaryKey(),
-	externalId: text('external_id').unique().notNull(),
+	id: integer('id').primaryKey({ autoIncrement: true }).unique(),
+	externalId: integer('external_id').unique().notNull(),
 	name: text('name').notNull(),
 	address: text('address').notNull(),
 	cuisine: text('cuisine').notNull(),
@@ -70,11 +70,11 @@ export const restaurants = sqliteTable('restaurants', {
 export const favorites = sqliteTable(
 	'favorites',
 	{
-		id: text('id').primaryKey(),
-		userId: text('user_id')
+		id: integer('id').primaryKey({ autoIncrement: true }).unique(),
+		userId: integer('user_id')
 			.notNull()
 			.references(() => users.id),
-		restaurantId: text('restaurant_id')
+		restaurantId: integer('restaurant_id')
 			.notNull()
 			.references(() => restaurants.id),
 		addedAt: text('added_at')
@@ -87,14 +87,14 @@ export const favorites = sqliteTable(
 );
 
 export const restaurantRecommendations = sqliteTable('restaurant_recommendations', {
-	id: text('id').primaryKey(),
+	id: integer('id').primaryKey({ autoIncrement: true }).unique(),
 	groupId: text('group_id')
 		.notNull()
 		.references(() => groups.id),
-	restaurantId: text('restaurant_id')
+	restaurantId: integer('restaurant_id')
 		.notNull()
 		.references(() => restaurants.id),
-	userId: text('user_id')
+	userId: integer('user_id')
 		.notNull()
 		.references(() => users.id),
 	mealType: text('meal_type', { enum: ['breakfast', 'lunch', 'dinner'] }).notNull(),
