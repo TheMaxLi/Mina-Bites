@@ -2108,7 +2108,7 @@ export async function load({ request, url }: RequestEvent) {
 			}
 		}
 	];
-	const data = { businesses };
+	const data = { businesses, offset: Number(offset) + limit };
 
-	return { businesses: data.businesses, offset: Number(offset) + limit };
+	return { businesses: data.businesses, offset: data.offset };
 }

@@ -72,7 +72,7 @@
 			</div>
 		</nav>
 
-		<main class="flex-1 md:pl-64 pb-16 md:pb-0">
+		<main class="flex-1 md:pl-64 pb-16 md:pb-0 relative">
 			{@render children()}
 		</main>
 	{:else}
