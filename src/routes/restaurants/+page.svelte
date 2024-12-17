@@ -33,7 +33,7 @@
 		loading = false;
 	}
 
-	async function handleScroll(event: UIEvent & { currentTarget: EventTarget & HTMLDivElement }) {
+	async function onscroll(event: UIEvent & { currentTarget: EventTarget & HTMLDivElement }) {
 		const bottom =
 			event.currentTarget.scrollHeight -
 				event.currentTarget.scrollTop -
@@ -45,7 +45,10 @@
 	}
 </script>
 
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 p-4 overflow-y-scroll h-screen">
+<div
+	class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 p-4 overflow-y-scroll h-screen"
+	{onscroll}
+>
 	{#each businesses as restaurant}
 		<RestaurantCard {restaurant} />
 	{/each}
