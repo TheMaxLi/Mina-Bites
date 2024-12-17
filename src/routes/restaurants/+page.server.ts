@@ -5,7 +5,7 @@ import type { Restaurant } from '$lib/types';
 export async function load({ request, url }: RequestEvent) {
 	const offset = url.searchParams.get('offset') || '0';
 	const limit = 20;
-	// const res = await fetch(`/api/restaurants?offset=${offset}`);
+	// const response = await fetch(`/api/restaurants?offset=${offset}`);
 
 	// const data = await res.json();
 
