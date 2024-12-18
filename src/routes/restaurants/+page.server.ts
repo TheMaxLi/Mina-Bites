@@ -1,5 +1,4 @@
 import type { RequestEvent } from '@sveltejs/kit';
-import { env } from '$env/dynamic/private';
 import type { Restaurant } from '$lib/types';
 
 export async function load({ request, url }: RequestEvent) {

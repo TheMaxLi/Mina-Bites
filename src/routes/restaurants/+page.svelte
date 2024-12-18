@@ -1,6 +1,5 @@
 <script lang="ts">
 	import type { Restaurant } from '$lib/types';
-	import { onMount } from 'svelte';
 	import RestaurantCard from '../../components/restaurantCard.svelte';
 	import Spinner from '../../components/spinner.svelte';
 	import { mightFail } from '@might/fail';
