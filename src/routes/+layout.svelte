@@ -1,32 +1,34 @@
 <script lang="ts">
 	import '../app.css';
 	import { page } from '$app/state';
-	import { LogOut, Home, Users, MapPin, Star, User } from 'lucide-svelte';
+	import { LogOut, Home, Users, MapPin, User } from 'lucide-svelte';
+	import { getUserState, setUserState } from '$lib/state.svelte';
+	let { children, data } = $props();
 
-	let { children } = $props();
+	setUserState(data.user!);
+	const user = getUserState();
 
 	const navItems = [
 		{ href: '/dashboard', icon: Home, label: 'Dashboard' },
 		{ href: '/restaurants', icon: MapPin, label: 'Restaurants' },
-		{ href: '/groups', icon: Users, label: 'Groups' },
-		{ href: '/favorites', icon: Star, label: 'Favorites' },
+		{ href: '/saved', icon: Users, label: 'Saved' },
 		{ href: '/profile', icon: User, label: 'Profile' }
 	];
 </script>
 
 <div class="flex flex-col min-h-screen">
-	{#if page.data.user}
+	{#if user}
 		<aside
 			class="hidden md:flex md:w-64 fixed left-0 top-0 bottom-0 bg-gray-100 p-6 flex-col justify-between"
 		>
 			<div>
 				<div class="mb-8 text-center">
 					<img
-						src={page.data.user.image || '/default-avatar.png'}
+						src={user.image || '/default-avatar.png'}
 						alt="User Avatar"
 						class="w-16 h-16 rounded-full mx-auto mb-2"
 					/>
-					<p class="font-semibold">{page.data.user.name || 'User'}</p>
+					<p class="font-semibold">{user.name || 'User'}</p>
 				</div>
 
 				<nav class="space-y-2">

@@ -1,24 +1,10 @@
 import { eq } from 'drizzle-orm';
 import { db } from '.';
 import { users } from './schema';
+import type { User, UserInput } from '$lib/types';
 
-interface UserInput {
-	email: string;
-	name?: string | null;
-	image?: string | null;
-	kindeId: string;
-}
-
-interface UserResult {
-	id: number;
-	email: string;
-	name: string | null;
-	image: string | null;
-	kindeId: string;
-	isNewUser: boolean;
-}
-
-export async function createOrGetUser(userData: UserInput): Promise<UserResult> {
+ 
+export async function createOrGetUser(userData: UserInput): Promise<User> {
 	try {
 		const [existingUser] = await db.select().from(users).where(eq(users.kindeId, userData.kindeId));
 

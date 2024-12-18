@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { Restaurant } from '$lib/types';
-	import RestaurantCard from '../../components/restaurantCard.svelte';
-	import Spinner from '../../components/spinner.svelte';
+	import RestaurantCard from '../../components/RestaurantCard.svelte';
+	import Spinner from '../../components/Spinner.svelte';
 	import { mightFail } from '@might/fail';
 	const { data } = $props();
 	let businesses = $state<Restaurant[]>(data.businesses);
