@@ -1,6 +1,6 @@
 <script lang="ts">
 	import '../app.css';
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 	import { LogOut, Home, Users, MapPin, Star, User } from 'lucide-svelte';
 
 	let { children } = $props();
@@ -15,18 +15,18 @@
 </script>
 
 <div class="flex flex-col min-h-screen">
-	{#if $page.data.user}
+	{#if page.data.user}
 		<aside
 			class="hidden md:flex md:w-64 fixed left-0 top-0 bottom-0 bg-gray-100 p-6 flex-col justify-between"
 		>
 			<div>
 				<div class="mb-8 text-center">
 					<img
-						src={$page.data.user.image || '/default-avatar.png'}
+						src={page.data.user.image || '/default-avatar.png'}
 						alt="User Avatar"
 						class="w-16 h-16 rounded-full mx-auto mb-2"
 					/>
-					<p class="font-semibold">{$page.data.user.name || 'User'}</p>
+					<p class="font-semibold">{page.data.user.name || 'User'}</p>
 				</div>
 
 				<nav class="space-y-2">
@@ -34,7 +34,7 @@
 						<a
 							href={item.href}
 							class="flex items-center p-2 rounded hover:bg-gray-200
-							{$page.url.pathname === item.href ? 'bg-blue-100' : ''}"
+							{page.url.pathname === item.href ? 'bg-blue-100' : ''}"
 						>
 							<item.icon class="mr-3 size-5" />
 							{item.label}
@@ -62,7 +62,7 @@
 					<a
 						href={item.href}
 						class="flex flex-col items-center justify-center
-						{$page.url.pathname === item.href
+						{page.url.pathname === item.href
 							? 'text-blue-600 font-semibold'
 							: 'text-gray-500 hover:text-gray-700'}"
 					>

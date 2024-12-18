@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 
-	const user = $page.data.user;
+	const user = page.data.user;
 	console.log(user);
 </script>
 
