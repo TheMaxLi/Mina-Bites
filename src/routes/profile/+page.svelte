@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Settings } from 'lucide-svelte';
 	import { getUserState } from '$lib/state.svelte';
-	import GroupSelfie from '../../components/GroupSelfie.svelte';
+	import GroupSelfie from '../../components/groupSelfie.svelte';
 
 	const user = getUserState();
 	const { data } = $props();
