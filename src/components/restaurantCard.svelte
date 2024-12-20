@@ -4,7 +4,7 @@
 	let { restaurant }: { restaurant: Restaurant } = $props();
 </script>
 
-<a href="/">
+<a href="/" title={restaurant.name}>
 	<div class="border rounded-lg p-4 shadow-sm hover:shadow-lg">
 		<div class="relative">
 			<img

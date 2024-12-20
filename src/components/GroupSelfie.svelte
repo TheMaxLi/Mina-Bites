@@ -14,7 +14,7 @@
 </script>
 
 <div class="flex flex-col">
-	<div>
+	<div title={group.name}>
 		<SelfieImage groupMembers={testMembers} />
 	</div>
 	<p>

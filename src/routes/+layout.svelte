@@ -34,6 +34,7 @@
 				<nav class="space-y-2">
 					{#each navItems as item}
 						<a
+							title={item.label}
 							href={item.href}
 							class="flex items-center p-2 rounded hover:bg-gray-200
 							{page.url.pathname === item.href ? 'bg-blue-100' : ''}"
@@ -62,6 +63,7 @@
 			<div class="flex py-3 px-8 w-full justify-between">
 				{#each navItems as item}
 					<a
+						title={item.label}
 						href={item.href}
 						class="flex flex-col items-center justify-center
 						{page.url.pathname === item.href
