@@ -1,7 +1,7 @@
 <script lang="ts">
 	import '../app.css';
 	import { page } from '$app/state';
-	import { LogOut, Home, Users, MapPin, User } from 'lucide-svelte';
+	import { LogOut, Home, MapPin, User, Bookmark } from 'lucide-svelte';
 	import { getUserState, setUserState } from '$lib/state.svelte';
 	let { children, data } = $props();
 
@@ -9,9 +9,9 @@
 	const user = getUserState();
 
 	const navItems = [
-		{ href: '/dashboard', icon: Home, label: 'Dashboard' },
+		{ href: '/dashboard', icon: Home, label: 'Home' },
 		{ href: '/restaurants', icon: MapPin, label: 'Restaurants' },
-		{ href: '/saved', icon: Users, label: 'Saved' },
+		{ href: '/saved', icon: Bookmark, label: 'Saved' },
 		{ href: '/profile', icon: User, label: 'Profile' }
 	];
 </script>
@@ -19,7 +19,7 @@
 <div class="flex flex-col min-h-screen">
 	{#if user}
 		<aside
-			class="hidden md:flex md:w-64 fixed left-0 top-0 bottom-0 bg-gray-100 p-6 flex-col justify-between"
+			class="hidden md:flex z-50 md:w-64 fixed left-0 top-0 bottom-0 bg-gray-100 p-6 flex-col justify-between"
 		>
 			<div>
 				<div class="mb-8 text-center">
@@ -69,6 +69,7 @@
 							: 'text-gray-500 hover:text-gray-700'}"
 					>
 						<item.icon class="size-8 mb-1" />
+						{item.label}
 					</a>
 				{/each}
 			</div>

@@ -5,11 +5,22 @@
 
 	const user = getUserState();
 	const { data } = $props();
-	console.log(data.groups);
+
+	let testData = [
+		...data.groups!,
+		...data.groups!,
+		...data.groups!,
+		...data.groups!,
+		...data.groups!,
+		...data.groups!,
+		...data.groups!,
+		...data.groups!,
+		...data.groups!
+	];
 </script>
 
-<div class="flex flex-col p-10 space-y-10">
-	<div class="flex justify-between pb-10 border-b">
+<div class="flex flex-col space-y-10">
+	<div class="flex justify-between p-10 border-b">
 		<div class="flex flex-col space-y-4 items-center">
 			<img class="rounded-full" src={user.image} alt={`${user.name}'s profile image'`} />
 			<p>{user.name}</p>
@@ -19,11 +30,16 @@
 			<Settings />
 		</div>
 	</div>
-	<div>
-		<p>Groups:</p>
-		<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
-			{#if data.groups}
+	<div class="flex flex-col w-full gap-5">
+		<p class="pl-5">Groups:</p>
+		<div class="grid grid-cols-2 gap-4 px-5 md:px-0 sm:justify-center w-full sm:flex sm:flex-wrap">
+			<!-- {#if data.groups}
 				{#each data.groups as group}
+					<GroupSelfie group={group.groups} groupMembers={group.group_members} />
+				{/each}
+			{/if} -->
+			{#if data.groups}
+				{#each testData as group}
 					<GroupSelfie group={group.groups} groupMembers={group.group_members} />
 				{/each}
 			{/if}

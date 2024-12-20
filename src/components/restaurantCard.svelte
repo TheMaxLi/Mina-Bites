@@ -5,7 +5,7 @@
 </script>
 
 <a href="/">
-	<div class="border rounded-lg p-4">
+	<div class="border rounded-lg p-4 shadow-sm hover:shadow-lg">
 		<div class="relative">
 			<img
 				class="aspect-square object-cover rounded-lg"

@@ -44,20 +44,35 @@
 	}
 </script>
 
-<div
-	class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 p-4 overflow-y-scroll h-screen"
-	{onscroll}
->
-	{#each businesses as restaurant}
-		<RestaurantCard {restaurant} />
-	{/each}
-</div>
-{#if loading}
-	<div class="p-4">
-		<Spinner />
+<div class="flex flex-col items-center">
+	<div
+		class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 p-4 overflow-y-scroll h-screen no-scrollbar"
+		{onscroll}
+	>
+		{#each businesses as restaurant}
+			<RestaurantCard {restaurant} />
+		{/each}
 	</div>
-{/if}
+	{#if loading}
+		<div class="relative h-10 w-full flex justify-center">
+			<div class="p-4 absolute bottom-0">
+				<Spinner />
+			</div>
+		</div>
+	{/if}
 
-{#if !hasMore}
-	<div class="col-span-full text-center text-gray-500 p-4">No more restaurants to load</div>
-{/if}
+	{#if !hasMore}
+		<div class="col-span-full text-center text-gray-500 p-4">No more restaurants to load</div>
+	{/if}
+</div>
+
+<style>
+	.no-scrollbar::-webkit-scrollbar {
+		display: none; /* Chrome */
+	}
+
+	.no-scrollbar {
+		-ms-overflow-style: none; /* IE and Edge */
+		scrollbar-width: none; /* Firefox */
+	}
+</style>
