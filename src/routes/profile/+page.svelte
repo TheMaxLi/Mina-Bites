@@ -19,14 +19,19 @@
 		...data.groups!
 	];
 
-	let showMenu = $state(false);
+	let showMenu = $state<boolean>(false);
 
 	function toggleMenu() {
 		showMenu = !showMenu;
 	}
+
+	$effect(() => console.log(showMenu));
 </script>
 
-<svelte:window on:click={(e) => handleClickOutside(e, '.plus-menu-container', showMenu)} />
+<svelte:window
+	on:click={(e) =>
+		handleClickOutside(e, '.plus-menu-container', () => (showMenu ? (showMenu = false) : showMenu))}
+/>
 
 <div class="flex flex-col space-y-10">
 	<div class="flex justify-between p-10 border-b">

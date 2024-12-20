@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { Restaurant } from '$lib/types';
+	import { slide } from 'svelte/transition';
 	import RestaurantCard from '../../components/restaurantCard.svelte';
 	import Spinner from '../../components/spinner.svelte';
 	import { mightFail } from '@might/fail';
@@ -54,7 +55,7 @@
 		{/each}
 	</div>
 	{#if loading}
-		<div class="relative h-10 w-full flex justify-center">
+		<div transition:slide class="relative h-10 w-full flex justify-center">
 			<div class="p-4 absolute bottom-0">
 				<Spinner />
 			</div>
