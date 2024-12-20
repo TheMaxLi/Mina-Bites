@@ -55,8 +55,12 @@
 					<div
 						class="absolute right-0 w-[145px] top-full mt-2 bg-white shadow-lg rounded-lg p-2 flex flex-col gap-2 z-20 border"
 					>
-						<a href="/" class="px-4 py-2 hover:bg-gray-100 rounded text-left">Create Group</a>
-						<a href="/" class="px-4 py-2 hover:bg-gray-100 rounded text-left">Join Group</a>
+						<a href="/group/create" class="px-4 py-2 hover:bg-gray-100 rounded text-left"
+							>Create Group</a
+						>
+						<a href="/group/join" class="px-4 py-2 hover:bg-gray-100 rounded text-left"
+							>Join Group</a
+						>
 					</div>
 				{/if}
 			</div>
