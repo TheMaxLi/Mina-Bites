@@ -7,11 +7,11 @@
 		$props();
 </script>
 
-<div class="flex flex-col">
+<div class="flex flex-col items-center">
 	<div title={group.name}>
 		<SelfieImage groupMembers={groupMembers ?? []} />
 	</div>
 	<p>
-		{group.name}
+		{group.name} - #{group.inviteCode}
 	</p>
 </div>

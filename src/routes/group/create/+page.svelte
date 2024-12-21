@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { ArrowLeft, ArrowRight } from 'lucide-svelte';
 	import OnBoardingPage from './onBoardingPage.svelte';
-	import { mightFail } from '@might/fail';
 	import { goto } from '$app/navigation';
 	import { browser } from '$app/environment';
+	import { enhance } from '$app/forms';
 
 	let { form } = $props();
 
@@ -32,7 +32,7 @@
 	});
 </script>
 
-<form method="POST">
+<form method="POST" use:enhance>
 	{#if stepCount === 1}
 		<OnBoardingPage question="What is your group name?" {stepCount}>
 			{#snippet headerMessage()}

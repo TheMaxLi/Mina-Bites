@@ -53,7 +53,9 @@
 				{/if}
 			</div>
 		</div>
-		<div class="grid grid-cols-2 gap-4 px-5 md:px-0 sm:justify-center w-full sm:flex sm:flex-wrap">
+		<div
+			class="grid grid-cols-2 gap-4 px-5 pb-10 md:px-0 sm:justify-center w-full sm:flex sm:flex-wrap"
+		>
 			{#if data.groups}
 				{#each data.groups as group}
 					<GroupSelfie group={group.groups} groupMembers={group.group_members} />

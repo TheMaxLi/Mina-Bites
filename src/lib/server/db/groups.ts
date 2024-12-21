@@ -84,3 +84,27 @@ export async function createGroup(
 		throw new Error('Unexpected error while creating group');
 	}
 }
+
+export async function joinGroup(
+	inviteCode: string,
+	userId: number
+): Promise<{ groupMember: GroupMember }> {
+	try {
+		const [groupResult] = await db.select().from(groups).where(eq(groups.inviteCode, inviteCode));
+		if (!groupResult) {
+			throw new Error('Invitee code invalid');
+		}
+		const [groupMembersResult] = await db
+			.insert(groupMembers)
+			.values({ groupId: groupResult.id, userId, role: 'member' })
+			.returning();
+
+		return { groupMember: groupMembersResult };
+	} catch (error) {
+		console.error('joining group error:', error);
+		if (error instanceof Error) {
+			throw new Error(`Failed to join group: ${error.message}`);
+		}
+		throw new Error('Unexpected error while joining group');
+	}
+}
