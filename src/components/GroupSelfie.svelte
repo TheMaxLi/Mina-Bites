@@ -5,17 +5,11 @@
 
 	const { group, groupMembers }: { group: Group; groupMembers: GetGroupGroupMember[] | null } =
 		$props();
-
-	let testMembers = [...groupMembers!, ...groupMembers!, ...groupMembers!];
-
-	for (let i = 0; i < 20; i++) {
-		testMembers.push(...groupMembers!);
-	}
 </script>
 
 <div class="flex flex-col">
 	<div title={group.name}>
-		<SelfieImage groupMembers={testMembers} />
+		<SelfieImage groupMembers={groupMembers ?? []} />
 	</div>
 	<p>
 		{group.name}

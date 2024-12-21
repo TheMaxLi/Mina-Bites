@@ -2,6 +2,8 @@
 	import { ArrowLeft, ArrowRight } from 'lucide-svelte';
 	import OnBoardingPage from './onBoardingPage.svelte';
 	import { mightFail } from '@might/fail';
+	import { goto } from '$app/navigation';
+	import { browser } from '$app/environment';
 
 	let { form } = $props();
 
@@ -20,6 +22,14 @@
 		'Sushi',
 		'Vegetarian'
 	]);
+
+	$effect(() => {
+		if (browser) {
+			if (form?.success) {
+				goto('/profile');
+			}
+		}
+	});
 </script>
 
 <form method="POST">

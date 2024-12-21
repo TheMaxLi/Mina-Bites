@@ -1,7 +1,7 @@
 import type { RequestEvent } from '@sveltejs/kit';
 import type { Restaurant } from '$lib/types';
 
-export async function load({ request, url }: RequestEvent) {
+export async function load({ fetch, request, url }: RequestEvent) {
 	const offset = url.searchParams.get('offset') || '0';
 	const limit = 20;
 	// const response = await fetch(`/api/restaurants?offset=${offset}`);

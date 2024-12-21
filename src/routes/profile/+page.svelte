@@ -7,18 +7,6 @@
 	const user = getUserState();
 	const { data } = $props();
 
-	let testData = [
-		...data.groups!,
-		...data.groups!,
-		...data.groups!,
-		...data.groups!,
-		...data.groups!,
-		...data.groups!,
-		...data.groups!,
-		...data.groups!,
-		...data.groups!
-	];
-
 	let showMenu = $state<boolean>(false);
 
 	function toggleMenu() {
@@ -66,13 +54,8 @@
 			</div>
 		</div>
 		<div class="grid grid-cols-2 gap-4 px-5 md:px-0 sm:justify-center w-full sm:flex sm:flex-wrap">
-			<!-- {#if data.groups}
-				{#each data.groups as group}
-					<GroupSelfie group={group.groups} groupMembers={group.group_members} />
-				{/each}
-			{/if} -->
 			{#if data.groups}
-				{#each testData as group}
+				{#each data.groups as group}
 					<GroupSelfie group={group.groups} groupMembers={group.group_members} />
 				{/each}
 			{/if}

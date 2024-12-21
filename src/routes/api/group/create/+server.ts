@@ -1,5 +1,22 @@
+import { createGroup } from '$lib/server/db/groups.js';
+import { mightFail } from '@might/fail';
 import { json } from '@sveltejs/kit';
 
-export async function POST({ request, url }: { request: Request; url: URL }) {
-	return json({});
+export async function POST({ request, url, cookies }) {
+	const { groupName } = await request.json();
+	const userId = cookies.get('userId');
+	if (!userId) {
+		return new Response('No user set in cookie', {
+			status: 401
+		});
+	}
+	const [createGroupError, createGroupResult] = await mightFail(
+		createGroup(groupName, parseInt(userId))
+	);
+	if (createGroupError) {
+		return new Response(createGroupError.message, {
+			status: 500
+		});
+	}
+	return json(createGroupResult);
 }

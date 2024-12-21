@@ -7,23 +7,12 @@
 	if (browser && !page.data.isAuthenticated) {
 		goto('/', { replaceState: true });
 	}
-	let testData = [
-		...data.groups!,
-		...data.groups!,
-		...data.groups!,
-		...data.groups!,
-		...data.groups!,
-		...data.groups!,
-		...data.groups!,
-		...data.groups!,
-		...data.groups!
-	];
 </script>
 
 <div class="p-10">
 	<div>HOMEEEE</div>
 	<div class="flex overflow-x-scroll gap-5">
-		{#each testData! as group}
+		{#each data.groups! as group}
 			<GroupSelfie group={group.groups!} groupMembers={group.group_members} />
 		{/each}
 	</div>

@@ -4,8 +4,7 @@ import { kindeAuthClient, type SessionManager } from '@kinde-oss/kinde-auth-svel
 import type { RequestEvent } from '@sveltejs/kit';
 
 /** @type {import('./$types').LayoutLoad} */
-export async function load({ request }: RequestEvent) {
-
+export async function load({ request, cookies }: RequestEvent) {
 	const isAuthenticated = await kindeAuthClient.isAuthenticated(
 		request as unknown as SessionManager
 	);
@@ -17,7 +16,7 @@ export async function load({ request }: RequestEvent) {
 			image: kindeUser.picture,
 			name: `${kindeUser.given_name} ${kindeUser.family_name}`
 		});
-
+		cookies.set('userId', user.id.toString(), { path: '/' });
 		return {
 			isAuthenticated,
 			user
@@ -28,4 +27,3 @@ export async function load({ request }: RequestEvent) {
 		};
 	}
 }
-
