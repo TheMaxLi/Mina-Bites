@@ -3,6 +3,7 @@
 	import { page } from '$app/state';
 	import { LogOut, Home, MapPin, User, Bookmark } from 'lucide-svelte';
 	import { getUserState, setUserState } from '$lib/state.svelte';
+	import SearchableDropDown from '../components/SearchableDropDown.svelte';
 	let { children, data } = $props();
 
 	setUserState(data.user!);
@@ -47,12 +48,7 @@
 			</div>
 
 			<div class="ml-2">
-				<a
-					href="/api/auth/logout"
-					class="flex items-center w-full p-2 rounded hover:bg-red-50 text-red-600"
-				>
-					<LogOut class="mr-2 size-5" /> Logout
-				</a>
+				<SearchableDropDown />
 			</div>
 		</aside>
 

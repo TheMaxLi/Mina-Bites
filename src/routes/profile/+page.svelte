@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Settings, PlusCircle } from 'lucide-svelte';
+	import { Settings, PlusCircle, LogOut } from 'lucide-svelte';
 	import { getUserState } from '$lib/state.svelte';
 	import GroupSelfie from '../../components/GroupSelfie.svelte';
 	import { handleClickOutside } from '$lib/clickOutside';
@@ -28,8 +28,16 @@
 			<p>{user.name}</p>
 		</div>
 		<div class="flex justify-between items-start gap-4">
-			<button>Edit profile</button>
 			<Settings />
+			<div class="flex flex-col">
+				<button>Edit profile</button>
+				<a
+					href="/api/auth/logout"
+					class="flex items-center w-full p-2 rounded hover:bg-red-50 text-red-600"
+				>
+					<LogOut class="mr-2 size-5" /> Logout
+				</a>
+			</div>
 		</div>
 	</div>
 	<div class="flex flex-col w-full gap-5">
