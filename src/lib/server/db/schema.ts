@@ -14,7 +14,8 @@ export const users = sqliteTable(
 			.notNull(),
 		updatedAt: text('updated_at')
 			.default(sql`(CURRENT_TIMESTAMP)`)
-			.notNull()
+			.notNull(),
+		currentGroupId: integer('current_group_id')
 	},
 	(table) => ({
 		emailIdx: uniqueIndex('email_idx').on(table.email)
