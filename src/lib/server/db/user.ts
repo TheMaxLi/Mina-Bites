@@ -3,7 +3,6 @@ import { db } from '.';
 import { users } from './schema';
 import type { User, UserInput } from '$lib/types';
 
- 
 export async function createOrGetUser(userData: UserInput): Promise<User> {
 	try {
 		const [existingUser] = await db.select().from(users).where(eq(users.kindeId, userData.kindeId));
@@ -34,5 +33,24 @@ export async function createOrGetUser(userData: UserInput): Promise<User> {
 			throw new Error(`Failed to create user: ${error.message}`);
 		}
 		throw new Error('Unexpected error during user creation');
+	}
+}
+
+export async function setCurrentGroup(userId: number, groupId: number) {
+	try {
+		console.log(userId, groupId, 'in the db function');
+		const result = await db
+			.update(users)
+			.set({ currentGroupId: groupId })
+			.where(eq(users.id, userId))
+			.returning();
+		console.log(result, 'in db');
+		return result;
+	} catch (error) {
+		console.error('setting current group error:', error);
+		if (error instanceof Error) {
+			throw new Error(`Failed to set current group: ${error.message}`);
+		}
+		throw new Error('Unexpected error while setting current group');
 	}
 }

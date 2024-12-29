@@ -1,32 +1,26 @@
 <script lang="ts">
 	import SearchInput from './SearchInput.svelte';
-
-	let menuOpen = $state(true);
+	type Searchable = {
+		id: number;
+		name: string;
+	};
+	let {
+		onSelect,
+		data
+	}: {
+		onSelect: (id: number) => Promise<void>;
+		data: Searchable[] | undefined;
+	} = $props();
+	let menuOpen = $state(false);
 	let inputValue = $state('');
-
-	const menuItems = [
-		'About',
-		'Base',
-		'Blog',
-		'Contact',
-		'Custom',
-		'Support',
-		'Tools',
-		'Boats',
-		'Cars',
-		'Bikes',
-		'Sheds',
-		'Billygoats',
-		'Zebras',
-		'Tennis Shoes',
-		'New Zealand'
-	];
-	let filteredItems = $state<any[]>([]);
+	let filteredItems = $state<Searchable[]>([]);
 
 	const handleInput = () => {
-		return (filteredItems = menuItems.filter((item) =>
-			item.toLowerCase().match(inputValue.toLowerCase())
-		));
+		if (data) {
+			return (filteredItems = data.filter((item) =>
+				item.name.toLowerCase().match(inputValue.toLowerCase())
+			));
+		}
 	};
 </script>
 
@@ -35,14 +29,18 @@
 
 	<div class="{menuOpen ? '' : 'hidden'} absolute min-w-56 max-w-28 border z-10 bottom-16 -left-4">
 		<SearchInput bind:inputValue oninput={handleInput} />
-		<div class="max-h-96 overflow-y-scroll">
+		<div class="max-h-96 overflow-y-scroll flex flex-col">
 			{#if filteredItems.length > 0}
 				{#each filteredItems as item}
-					<img src="https://i.pinimg.com/736x/17/8c/c1/178cc1a3453979979e3d1afd0c89dd9b.jpg" />
+					<button onclick={async () => await onSelect(item.id)}>
+						{item.name}
+					</button>
 				{/each}
 			{:else}
-				{#each menuItems as item}
-					<img src="https://i.pinimg.com/736x/17/8c/c1/178cc1a3453979979e3d1afd0c89dd9b.jpg" />
+				{#each data ?? [] as item}
+					<button onclick={async () => await onSelect(item.id)}>
+						{item.name}
+					</button>
 				{/each}
 			{/if}
 		</div>

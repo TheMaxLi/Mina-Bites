@@ -4,8 +4,9 @@
 	import GroupSelfie from '../../components/GroupSelfie.svelte';
 	import { handleClickOutside } from '$lib/clickOutside';
 
-	const user = getUserState();
 	const { data } = $props();
+
+	const user = data.user!;
 
 	let showMenu = $state<boolean>(false);
 

@@ -74,6 +74,7 @@ export interface User {
 	image: string | null;
 	kindeId: string;
 	isNewUser: boolean;
+	currentGroupId: number | null;
 }
 
 // Types for Groups

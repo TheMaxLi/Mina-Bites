@@ -11,7 +11,7 @@ export interface GetGroupGroupMember extends GroupMember {
 
 export async function getGroups(
 	userId: number
-): Promise<{ groups: Group; group_members: GetGroupGroupMember[] | null }[]> {
+): Promise<{ groups: Group; group_members: GetGroupGroupMember[] }[]> {
 	try {
 		const groupsResult = await db
 			.select({

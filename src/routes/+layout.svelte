@@ -4,10 +4,11 @@
 	import { LogOut, Home, MapPin, User, Bookmark } from 'lucide-svelte';
 	import { getUserState, setUserState } from '$lib/state.svelte';
 	import SearchableDropDown from '../components/SearchableDropDown.svelte';
+	import { mightFail } from '@might/fail';
+	import { invalidateAll } from '$app/navigation';
 	let { children, data } = $props();
 
 	setUserState(data.user!);
-	const user = getUserState();
 
 	const navItems = [
 		{ href: '/dashboard', icon: Home, label: 'Home' },
@@ -15,21 +16,37 @@
 		{ href: '/saved', icon: Bookmark, label: 'Saved' },
 		{ href: '/profile', icon: User, label: 'Profile' }
 	];
+	const handleSelectGroup = async (groupId: number) => {
+		const [selectError, selectResult] = await mightFail(
+			fetch(`/api/group/select_current`, { method: 'PATCH', body: JSON.stringify({ groupId }) })
+		);
+
+		if (selectError) {
+			return console.error('Error loading more restaurants:', selectResult);
+		}
+
+		invalidateAll();
+	};
+
+	const searchableGroups = data.groups?.map((g) => {
+		return { id: g.id, name: g.name };
+	});
 </script>
 
 <div class="flex flex-col min-h-screen">
-	{#if user}
+	{#if data.user}
 		<aside
 			class="hidden md:flex z-50 md:w-64 fixed left-0 top-0 bottom-0 bg-gray-100 p-6 flex-col justify-between"
 		>
 			<div>
 				<div class="mb-8 text-center">
 					<img
-						src={user.image || '/default-avatar.png'}
+						src={data.user.image || '/default-avatar.png'}
 						alt="User Avatar"
 						class="w-16 h-16 rounded-full mx-auto mb-2"
 					/>
-					<p class="font-semibold">{user.name || 'User'}</p>
+					<p class="font-semibold">{data.user.name || 'User'}</p>
+					Current group: {data.user.currentGroupId}
 				</div>
 
 				<nav class="space-y-2">
@@ -48,7 +65,7 @@
 			</div>
 
 			<div class="ml-2">
-				<SearchableDropDown />
+				<SearchableDropDown onSelect={handleSelectGroup} data={searchableGroups} />
 			</div>
 		</aside>
 

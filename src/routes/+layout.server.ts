@@ -1,4 +1,5 @@
 import { getUserFromRequest } from '$lib';
+import { getGroups } from '$lib/server/db/groups';
 import { createOrGetUser } from '$lib/server/db/user';
 import { kindeAuthClient, type SessionManager } from '@kinde-oss/kinde-auth-sveltekit';
 import type { RequestEvent } from '@sveltejs/kit';
@@ -17,9 +18,13 @@ export async function load({ request, cookies }: RequestEvent) {
 			name: `${kindeUser.given_name} ${kindeUser.family_name}`
 		});
 		cookies.set('userId', user.id.toString(), { path: '/' });
+		// if needed for optimization, make a new function that only queries for groups and not groups + groupmembers
+		const userGroups = await getGroups(user.id);
+		const groups = userGroups.map((g) => g.groups);
 		return {
 			isAuthenticated,
-			user
+			user,
+			groups
 		};
 	} else {
 		return {

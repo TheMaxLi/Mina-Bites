@@ -10,7 +10,6 @@ export async function POST({ request, url, cookies }) {
 			status: 401
 		});
 	}
-	console.log('jalksdjaslkdjaskjdlksadjkals');
 	const [joinGroupError, joinGroupResult] = await mightFail(
 		joinGroup(inviteCode, parseInt(userId))
 	);
