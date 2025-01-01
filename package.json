@@ -35,6 +35,7 @@
 		"@might/fail": "npm:@jsr/might__fail@^0.7.3",
 		"drizzle-orm": "^0.33.0",
 		"lucide-svelte": "^0.468.0",
-		"pino": "^9.5.0"
+		"pino": "^9.5.0",
+		"svelte-sonner": "^0.3.28"
 	}
 }

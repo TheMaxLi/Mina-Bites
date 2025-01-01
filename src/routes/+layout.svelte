@@ -1,11 +1,13 @@
 <script lang="ts">
 	import '../app.css';
 	import { page } from '$app/state';
-	import { LogOut, Home, MapPin, User, Bookmark } from 'lucide-svelte';
-	import { getUserState, setUserState } from '$lib/state.svelte';
+	import { Home, MapPin, User, Bookmark } from 'lucide-svelte';
+	import { setUserState } from '$lib/state.svelte';
 	import SearchableDropDown from '../components/SearchableDropDown.svelte';
 	import { mightFail } from '@might/fail';
 	import { invalidateAll } from '$app/navigation';
+	import { Toaster } from 'svelte-sonner';
+
 	let { children, data } = $props();
 
 	setUserState(data.user!);
@@ -33,6 +35,8 @@
 	});
 </script>
 
+<Toaster />
+
 <div class="flex flex-col min-h-screen">
 	{#if data.user}
 		<aside
@@ -48,7 +52,6 @@
 					<p class="font-semibold">{data.user.name || 'User'}</p>
 					Current group: {data.user.currentGroupId}
 				</div>
-
 				<nav class="space-y-2">
 					{#each navItems as item}
 						<a
