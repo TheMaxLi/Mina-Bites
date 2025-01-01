@@ -51,7 +51,7 @@
 		{onscroll}
 	>
 		{#each businesses as restaurant}
-			<RestaurantCard {restaurant} user={data.user}/>
+			<RestaurantCard {restaurant} user={data.user} />
 		{/each}
 	</div>
 	{#if loading}

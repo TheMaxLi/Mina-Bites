@@ -60,13 +60,6 @@ export type Attributes = {
 	waitlist_reservation: boolean | null;
 };
 
-export interface UserInput {
-	email: string;
-	name?: string | null;
-	image?: string | null;
-	kindeId: string;
-}
-
 export interface User {
 	id: number;
 	email: string;
@@ -117,10 +110,30 @@ export interface RestaurantRecommendation {
 	recommendedAt: string;
 }
 
-// Optional: Insert Types (without auto-generated fields)
 export type NewUser = Omit<User, 'id' | 'createdAt' | 'updatedAt'>;
 export type NewGroup = Omit<Group, 'id' | 'createdAt' | 'updatedAt'>;
 export type NewGroupMember = Omit<GroupMember, 'id' | 'joinedAt'>;
-export type NewRestaurant = Omit<Restaurant, 'id'>;
+export type NewRestaurant = Omit<DbRestaurant, 'id'>;
 export type NewFavorite = Omit<Favorite, 'id' | 'addedAt'>;
 export type NewRestaurantRecommendation = Omit<RestaurantRecommendation, 'id' | 'recommendedAt'>;
+
+export type DbRestaurant = {
+	id: number;
+	externalId: string;
+	name: string;
+	address: string;
+	price: string | null;
+	latitude: number;
+	longitude: number;
+	image: string | null;
+	rating: number;
+	menuUrl: string | null;
+	url: string | null;
+};
+
+export interface UserInput {
+	email: string;
+	name?: string | null;
+	image?: string | null;
+	kindeId: string;
+}

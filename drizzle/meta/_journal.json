@@ -8,6 +8,34 @@
       "when": 1735012576600,
       "tag": "0000_wonderful_johnny_blaze",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1735530973926,
+      "tag": "0001_yielding_catseye",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1735532337286,
+      "tag": "0002_tidy_hellfire_club",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "6",
+      "when": 1735532478974,
+      "tag": "0003_shiny_morlun",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "6",
+      "when": 1735533283386,
+      "tag": "0004_cold_human_fly",
+      "breakpoints": true
     }
   ]
 }

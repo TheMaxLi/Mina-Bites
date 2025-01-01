@@ -58,14 +58,16 @@ export const groupMembers = sqliteTable(
 
 export const restaurants = sqliteTable('restaurants', {
 	id: integer('id').primaryKey({ autoIncrement: true }).unique(),
-	externalId: integer('external_id').unique().notNull(),
+	externalId: text('external_id').unique().notNull(),
 	name: text('name').notNull(),
 	address: text('address').notNull(),
-	cuisine: text('cuisine').notNull(),
-	priceRange: integer('price_range').notNull(),
+	price: text('price'),
 	latitude: real('latitude').notNull(),
 	longitude: real('longitude').notNull(),
-	isOpen: integer('is_open', { mode: 'boolean' }).notNull()
+	image: text('image'),
+	rating: real('rating').notNull(),
+	menuUrl: text('menu_url'),
+	url: text('url')
 });
 
 export const favorites = sqliteTable(
@@ -89,7 +91,7 @@ export const favorites = sqliteTable(
 
 export const restaurantRecommendations = sqliteTable('restaurant_recommendations', {
 	id: integer('id').primaryKey({ autoIncrement: true }).unique(),
-	groupId: text('group_id')
+	groupId: integer('group_id')
 		.notNull()
 		.references(() => groups.id),
 	restaurantId: integer('restaurant_id')

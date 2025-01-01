@@ -1,6 +1,5 @@
 import type { RequestEvent } from '@sveltejs/kit';
 import type { Restaurant } from '$lib/types';
-import type { Actions } from './$types';
 
 export async function load({ fetch, request, url }: RequestEvent) {
 	const offset = url.searchParams.get('offset') || '0';
