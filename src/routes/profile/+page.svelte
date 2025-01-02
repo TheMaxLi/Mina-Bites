@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Settings, PlusCircle, LogOut } from 'lucide-svelte';
+	import { Settings, PlusCircle, LogOut, Star, Users } from 'lucide-svelte';
 	import { getUserState } from '$lib/state.svelte';
 	import GroupSelfie from '../../components/GroupSelfie.svelte';
 	import { handleClickOutside } from '$lib/clickOutside';
@@ -16,7 +16,7 @@
 </script>
 
 <svelte:window
-	on:click={(e) =>
+	onclick={(e) =>
 		handleClickOutside(e, '.plus-menu-container', () => (showMenu ? (showMenu = false) : showMenu))}
 />
 
@@ -63,8 +63,14 @@
 		<div
 			class="grid grid-cols-2 gap-4 px-5 pb-10 md:px-0 sm:justify-center w-full sm:flex sm:flex-wrap"
 		>
-			{#if data.groups}
-				{#each data.groups as group}
+			{#if data.groups?.length === 0}
+				<div class="text-center py-12">
+					<Users class="mx-auto mb-4 text-gray-300" size={48} />
+					<h2 class="text-xl font-semibold mb-2">No groups yet</h2>
+					<p class="text-gray-600 mb-4">Start adding restaurants and plan out your day!</p>
+				</div>
+			{:else}
+				{#each data.groups! as group}
 					<GroupSelfie group={group.groups} groupMembers={group.group_members} />
 				{/each}
 			{/if}

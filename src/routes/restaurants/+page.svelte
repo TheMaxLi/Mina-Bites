@@ -46,7 +46,7 @@
 	}
 </script>
 
-<div class="flex flex-col items-center">
+<div class="flex flex-col items-center no-scrollbar">
 	<div
 		class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 p-4 overflow-y-scroll h-screen no-scrollbar"
 		{onscroll}

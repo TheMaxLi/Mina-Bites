@@ -15,7 +15,7 @@ export async function load({ request, cookies }: RequestEvent) {
 			email: kindeUser.email,
 			kindeId: kindeUser.id,
 			image: kindeUser.picture,
-			name: `${kindeUser.given_name} ${kindeUser.family_name}`,
+			name: `${kindeUser.given_name} ${kindeUser.family_name ?? ''}`
 		});
 		cookies.set('userId', user.id.toString(), { path: '/' });
 		// if needed for optimization, make a new function that only queries for groups and not groups + groupmembers

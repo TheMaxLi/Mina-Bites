@@ -55,12 +55,12 @@
 </script>
 
 <svelte:window
-	on:click={(e) =>
+	onclick={(e) =>
 		handleClickOutside(e, '.menu-container', () => (showMenu ? (showMenu = false) : showMenu))}
 />
 
 <a href="/" title={restaurant.name}>
-	<div class="rounded-lg shadow-md hover:shadow-lg bg-white">
+	<div class="rounded-lg shadow-md hover:shadow-lg bg-white h-full">
 		<div class="relative">
 			<img
 				class="w-full h-48 object-cover rounded-t-lg"
