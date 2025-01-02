@@ -13,8 +13,6 @@
 	function toggleMenu() {
 		showMenu = !showMenu;
 	}
-
-	$effect(() => console.log(showMenu));
 </script>
 
 <svelte:window

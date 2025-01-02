@@ -2,7 +2,6 @@ import { mightFail } from '@might/fail';
 
 export const actions = {
 	default: async ({ fetch, request }) => {
-		console.log("wheere are we JOING")
 		const data = await request.formData();
 		const inviteCode = data.get('inviteCode');
 

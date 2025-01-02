@@ -12,9 +12,7 @@ export async function POST({ request, url, cookies }) {
 	}: { groupId: string; restaurant: Restaurant; mealType: MealType } = await request.json();
 	const userId = cookies.get('userId');
 	if (!userId) {
-		return new Response('No user set in cookie', {
-			status: 401
-		});
+		return json({ error: 'Unauthorized' }, { status: 401 });
 	}
 
 	const restaurantData: NewRestaurant = {

@@ -9,6 +9,7 @@
 	let offset = $state(data.offset);
 	let loading = $state(false);
 	let hasMore = $state(true);
+	let favoritesArray = $derived(data.favorites.map((f) => f.restaurant?.externalId));
 
 	async function loadMore() {
 		if (loading || !hasMore) return;
@@ -51,7 +52,11 @@
 		{onscroll}
 	>
 		{#each businesses as restaurant}
-			<RestaurantCard {restaurant} user={data.user} />
+			<RestaurantCard
+				{restaurant}
+				user={data.user}
+				isFavorited={favoritesArray.includes(restaurant.id)}
+			/>
 		{/each}
 	</div>
 	{#if loading}

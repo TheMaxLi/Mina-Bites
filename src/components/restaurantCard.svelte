@@ -1,9 +1,16 @@
 <script lang="ts">
+	import { invalidateAll } from '$app/navigation';
 	import { handleClickOutside } from '$lib/clickOutside';
 	import type { MealType, Restaurant, User } from '$lib/types';
 	import { mightFail } from '@might/fail';
-	import { Heart, CirclePlus } from 'lucide-svelte';
-	let { restaurant, user }: { restaurant: Restaurant; user: User | undefined } = $props();
+	import { Heart, CirclePlus, Star } from 'lucide-svelte';
+	import { toast } from 'svelte-sonner';
+
+	let {
+		restaurant,
+		user,
+		isFavorited
+	}: { restaurant: Restaurant; user: User | undefined; isFavorited: boolean } = $props();
 
 	let showMenu = $state(false);
 
@@ -12,7 +19,7 @@
 		e.stopPropagation();
 
 		if (!user) {
-			return; // do some pop up
+			return toast('Please login or create an account first');
 		}
 		const [addError, addResult] = await mightFail(
 			fetch('api/restaurants/add_to_group', {
@@ -21,7 +28,25 @@
 			})
 		);
 	};
+	const handleAddToFavorite = async (e: Event) => {
+		e.preventDefault();
+		e.stopPropagation();
 
+		if (!user) {
+			return toast('Please login or create an account first');
+		}
+		const [addError, addResult] = await mightFail(
+			fetch('api/favorites', {
+				method: 'POST',
+				body: JSON.stringify({ restaurant })
+			})
+		);
+		if (addError) {
+			return toast('Could not add to favorites');
+		}
+		await invalidateAll();
+		toast(`${restaurant.name} has been added to favorites`);
+	};
 	const handleOpenMenu = (e: Event) => {
 		e.preventDefault();
 		e.stopPropagation();
@@ -35,26 +60,30 @@
 />
 
 <a href="/" title={restaurant.name}>
-	<div class="border rounded-lg p-4 shadow-sm hover:shadow-lg">
+	<div class="rounded-lg shadow-md hover:shadow-lg bg-white">
 		<div class="relative">
 			<img
-				class="aspect-square object-cover rounded-lg"
+				class="w-full h-48 object-cover rounded-t-lg"
 				src={restaurant.image_url}
 				alt={`${restaurant.name}`}
 			/>
 			<button class="absolute top-2 right-2 rounded-full bg-white p-2" name="Save">
-				<Heart />
+				<Heart
+					onclick={handleAddToFavorite}
+					color={isFavorited ? 'red' : 'black'}
+					fill={isFavorited ? 'red' : 'white'}
+				/>
 			</button>
 		</div>
-		<div>
-			<div class="flex w-full justify-between">
-				<p>{restaurant.name}</p>
-				{restaurant.price}
-			</div>
-			<div class="flex w-full justify-between menu-container relative">
-				<p class="text-gray-500">{restaurant.location.address1}</p>
-				<button name="Add to group" onclick={handleOpenMenu}>
-					<CirclePlus class="rounded-lg p-0.5 bg-green-200 hover:bg-green-300" />
+		<div class="p-4">
+			<div class="flex justify-between items-start mb-2 menu-container relative">
+				<h3 class="text-lg font-semibold">{restaurant.name}</h3>
+				<button
+					name="Add to group"
+					class="text-green-400 hover:text-green-500"
+					onclick={handleOpenMenu}
+				>
+					<CirclePlus class="rounded-lg p-0.5" />
 				</button>
 				{#if showMenu}
 					<div
@@ -75,6 +104,18 @@
 						>
 					</div>
 				{/if}
+			</div>
+			<div class="mb-2 flex items-center space-x-2">
+				<span class="text-green-600 font-medium">
+					{restaurant.price}
+				</span>
+			</div>
+			<div class="flex items-center justify-between mt-4 text-sm text-gray-500">
+				<p class="text-gray-500">{restaurant.location.address1}</p>
+				<div class="flex items-center">
+					<Star class="text-yellow-400 mr-1" size={16} />
+					<span>{restaurant.rating}</span>
+				</div>
 			</div>
 		</div>
 	</div>

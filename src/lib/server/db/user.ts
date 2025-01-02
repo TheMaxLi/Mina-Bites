@@ -38,13 +38,11 @@ export async function createOrGetUser(userData: UserInput): Promise<User> {
 
 export async function setCurrentGroup(userId: number, groupId: number) {
 	try {
-		console.log(userId, groupId, 'in the db function');
 		const result = await db
 			.update(users)
 			.set({ currentGroupId: groupId })
 			.where(eq(users.id, userId))
 			.returning();
-		console.log(result, 'in db');
 		return result;
 	} catch (error) {
 		console.error('setting current group error:', error);
