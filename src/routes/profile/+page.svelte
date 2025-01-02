@@ -60,20 +60,20 @@
 				{/if}
 			</div>
 		</div>
-		<div
-			class="grid grid-cols-2 gap-4 px-5 pb-10 md:px-0 sm:justify-center w-full sm:flex sm:flex-wrap"
-		>
-			{#if data.groups?.length === 0}
-				<div class="text-center py-12">
-					<Users class="mx-auto mb-4 text-gray-300" size={48} />
-					<h2 class="text-xl font-semibold mb-2">No groups yet</h2>
-					<p class="text-gray-600 mb-4">Start adding restaurants and plan out your day!</p>
-				</div>
-			{:else}
+		{#if data.groups?.length === 0}
+			<div class="text-center py-12">
+				<Users class="mx-auto mb-4 text-gray-300" size={48} />
+				<h2 class="text-xl font-semibold mb-2">No groups yet</h2>
+				<p class="text-gray-600 mb-4">Start adding restaurants and plan out your day!</p>
+			</div>
+		{:else}
+			<div
+				class="grid grid-cols-2 gap-4 px-5 pb-10 md:px-0 sm:justify-center w-full sm:flex sm:flex-wrap"
+			>
 				{#each data.groups! as group}
 					<GroupSelfie group={group.groups} groupMembers={group.group_members} />
 				{/each}
-			{/if}
-		</div>
+			</div>
+		{/if}
 	</div>
 </div>
