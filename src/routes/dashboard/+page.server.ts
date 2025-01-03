@@ -1,5 +1,5 @@
 import { getUserFromRequest } from '$lib';
-import { getGroups } from '$lib/server/db/groups';
+import { getGroups, getRecommendedRestaurantsForGroup } from '$lib/server/db/groups';
 import { createOrGetUser } from '$lib/server/db/user';
 import { kindeAuthClient, type SessionManager } from '@kinde-oss/kinde-auth-sveltekit';
 import { mightFail } from '@might/fail';
@@ -26,10 +26,28 @@ export async function load({ request }: RequestEvent) {
 		const [groupsError, groupsResult] = await mightFail(getGroups(userResult.id));
 		if (groupsError) return console.error('Fail getting groups');
 
+		if (!userResult.currentGroupId) {
+			return {
+				isAuthenticated,
+				user: userResult,
+				groups: groupsResult,
+				breakfastRecs: [],
+				lunchRecs: [],
+				dinnerRecs: []
+			};
+		}
+
+		const recs = await getRecommendedRestaurantsForGroup(userResult.currentGroupId);
+		const breakfastRecs = recs.filter((r) => r.mealType === 'breakfast');
+		const lunchRecs = recs.filter((r) => r.mealType === 'lunch');
+		const dinnerRecs = recs.filter((r) => r.mealType === 'dinner');
 		return {
 			isAuthenticated,
 			user: userResult,
-			groups: groupsResult
+			groups: groupsResult,
+			breakfastRecs,
+			lunchRecs,
+			dinnerRecs
 		};
 	} else {
 		return {

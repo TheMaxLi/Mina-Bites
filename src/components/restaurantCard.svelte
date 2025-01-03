@@ -111,7 +111,7 @@
 				</span>
 			</div>
 			<div class="flex items-center justify-between mt-4 text-sm text-gray-500">
-				<p class="text-gray-500">{restaurant.location.address1}</p>
+				<p class="text-gray-500">{restaurant.location.display_address.join(' ')}</p>
 				<div class="flex items-center">
 					<Star class="text-yellow-400 mr-1" size={16} />
 					<span>{restaurant.rating}</span>

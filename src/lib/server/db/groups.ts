@@ -1,6 +1,6 @@
 import { eq } from 'drizzle-orm';
 import { db } from '.';
-import { groupMembers, groups, users } from './schema';
+import { groupMembers, groups, restaurantRecommendations, restaurants, users } from './schema';
 import type { Group, GroupMember } from '$lib/types';
 import { generateRandomCode } from '$lib/generateRandomCode';
 
@@ -107,4 +107,16 @@ export async function joinGroup(
 		}
 		throw new Error('Unexpected error while joining group');
 	}
+}
+
+export async function getRecommendedRestaurantsForGroup(groupId: number) {
+	return await db
+		.select({
+			mealType: restaurantRecommendations.mealType,
+			recommendedAt: restaurantRecommendations.recommendedAt,
+			restaurant: restaurants
+		})
+		.from(restaurantRecommendations)
+		.innerJoin(restaurants, eq(restaurantRecommendations.restaurantId, restaurants.id))
+		.where(eq(restaurantRecommendations.groupId, groupId));
 }

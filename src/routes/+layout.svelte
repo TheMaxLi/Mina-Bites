@@ -50,7 +50,7 @@
 						class="w-16 h-16 rounded-full mx-auto mb-2"
 					/>
 					<p class="font-semibold">{data.user.name || 'User'}</p>
-					{data.user.currentGroupId === null ? '' : `Current group: ${data.user.currentGroupId}`}
+					{data.user.currentGroupId === null ? '' : `Current group: ${data.currentGroup.name}`}
 				</div>
 				<nav class="space-y-2">
 					{#each navItems as item}
@@ -106,7 +106,7 @@
 <style>
 	@media (max-width: 767px) {
 		main {
-			padding-bottom: 72px;
+			padding-top: 72px;
 		}
 	}
 </style>

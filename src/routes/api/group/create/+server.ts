@@ -1,4 +1,6 @@
-import { createGroup } from '$lib/server/db/groups.js';
+import { createGroup, joinGroup } from '$lib/server/db/groups.js';
+import { setCurrentGroup } from '$lib/server/db/user.js';
+import { getUserState } from '$lib/state.svelte.js';
 import { mightFail } from '@might/fail';
 import { json } from '@sveltejs/kit';
 
@@ -11,10 +13,18 @@ export async function POST({ request, url, cookies }) {
 	const [createGroupError, createGroupResult] = await mightFail(
 		createGroup(groupName, parseInt(userId))
 	);
+
 	if (createGroupError) {
 		return new Response(createGroupError.message, {
 			status: 500
 		});
 	}
+
+	const user = getUserState();
+
+	if (!user.currentGroupId) {
+		await setCurrentGroup(user.id, createGroupResult.group.id);
+	}
+
 	return json(createGroupResult);
 }

@@ -21,10 +21,12 @@ export async function load({ request, cookies }: RequestEvent) {
 		// if needed for optimization, make a new function that only queries for groups and not groups + groupmembers
 		const userGroups = await getGroups(user.id);
 		const groups = userGroups.map((g) => g.groups);
+		const [currentGroup] = groups.filter((g) => g.id === user.currentGroupId);
 		return {
 			isAuthenticated,
 			user,
-			groups
+			groups,
+			currentGroup
 		};
 	} else {
 		return {
