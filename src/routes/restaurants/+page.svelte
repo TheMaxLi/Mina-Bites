@@ -4,6 +4,7 @@
 	import RestaurantCard from '../../components/restaurantCard.svelte';
 	import Spinner from '../../components/spinner.svelte';
 	import { mightFail } from '@might/fail';
+
 	const { data } = $props();
 	let businesses = $state<Restaurant[]>(data.businesses);
 	let offset = $state(data.offset);
@@ -11,44 +12,149 @@
 	let hasMore = $state(true);
 	let favoritesArray = $derived(data.favorites.map((f) => f.restaurant?.externalId));
 
-	async function loadMore() {
-		if (loading || !hasMore) return;
+	let selectedPrice = $state('');
+	let selectedRating = $state('');
+	let selectedCategory = $state('');
+	let selectedSort = $state('best_match');
+	let search = $state('');
+
+	const priceOptions = [
+		{ label: '$', value: [1, 2, 3, 4] },
+		{ label: '$$', value: [2, 3, 4] },
+		{ label: '$$$', value: [3, 4] },
+		{ label: '$$$$', value: [4] }
+	];
+	const categoryOptions = ['japanese', 'italian', 'chinese', 'american', 'mexican'];
+	const sortOptions = [
+		{ value: 'best_match', label: 'Best Match' },
+		{ value: 'rating', label: 'Rating' },
+		{ value: 'review_count', label: 'Review Count' },
+		{ value: 'distance', label: 'Distance' }
+	];
+
+	async function loadRestaurants(reset = false) {
+		if (loading) return;
 		loading = true;
 
-		const [restaurantError, restaurantResult] = await mightFail(
-			fetch(`/api/restaurants?offset=${offset}`)
-		);
+		const currentOffset = reset ? 0 : offset;
+		let url = `/api/restaurants?offset=${currentOffset}`;
 
-		if (restaurantError) {
-			return console.error('Error loading more restaurants:', restaurantError);
+		if (selectedPrice) url += `&price=${selectedPrice}`;
+		if (selectedRating) url += `&rating=${selectedRating}`;
+		if (selectedCategory) url += `&category=${selectedCategory}`;
+		if (selectedSort) url += `&sort_by=${selectedSort}`;
+		if (search) url += `&term=${search}`;
+
+		const [error, result] = await mightFail(fetch(url));
+
+		if (error) {
+			console.error('Error loading restaurants:', error);
+			loading = false;
+			return;
 		}
 
-		const [convertToJSONError, newData] = await mightFail(restaurantResult.json());
+		const [jsonError, newData] = await mightFail(result.json());
+
+		if (jsonError) {
+			console.error('Error parsing JSON:', jsonError);
+			loading = false;
+			return;
+		}
 
 		if (newData.businesses.length === 0) {
 			hasMore = false;
 		} else {
-			businesses = [...businesses, ...newData.businesses];
+			businesses = reset ? newData.businesses : [...businesses, ...newData.businesses];
 			offset = newData.offset;
 		}
 		loading = false;
 	}
 
-	async function onscroll(event: UIEvent & { currentTarget: EventTarget & HTMLDivElement }) {
+	async function handleFilterChange() {
+		businesses = [];
+		hasMore = true;
+		offset = 0;
+		await loadRestaurants(true);
+	}
+
+	async function loadMore() {
+		if (!hasMore) return;
+		await loadRestaurants();
+	}
+
+	function onscroll(event: UIEvent & { currentTarget: EventTarget & HTMLDivElement }) {
 		const bottom =
 			event.currentTarget.scrollHeight -
 				event.currentTarget.scrollTop -
 				event.currentTarget.clientHeight <
 			1;
 		if (bottom && !loading) {
-			await loadMore();
+			loadMore();
 		}
 	}
 </script>
 
-<div class="flex flex-col items-center no-scrollbar">
+<div class="flex flex-col items-center w-full max-w-7xl mx-auto px-4">
+	<div class="w-full bg-white shadow-sm rounded-lg p-4 mb-4 grid grid-cols-1 md:grid-cols-4 gap-4">
+		<!-- Refactor these into a component -->
+		<div class="flex flex-col">
+			<!-- svelte-ignore a11y_label_has_associated_control -->
+			<label class="text-sm font-medium text-gray-700 mb-1">Search</label>
+			<input
+				type="text"
+				bind:value={search}
+				placeholder="Search..."
+				oninput={handleFilterChange}
+				class="mt-1 block w-full rounded-md border-gray-300 shadow-sm pl-1 focus:border-indigo-500 focus:ring-indigo-500"
+			/>
+		</div>
+		<div class="flex flex-col">
+			<!-- svelte-ignore a11y_label_has_associated_control -->
+			<label class="text-sm font-medium text-gray-700 mb-1">Price Range</label>
+			<select
+				bind:value={selectedPrice}
+				onchange={handleFilterChange}
+				class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+			>
+				<option value="">All Prices</option>
+				{#each priceOptions as price}
+					<option value={price.value}>{price.label}</option>
+				{/each}
+			</select>
+		</div>
+
+		<div class="flex flex-col">
+			<!-- svelte-ignore a11y_label_has_associated_control -->
+			<label class="text-sm font-medium text-gray-700 mb-1">Category</label>
+			<select
+				bind:value={selectedCategory}
+				onchange={handleFilterChange}
+				class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+			>
+				<option value="">All Categories</option>
+				{#each categoryOptions as category}
+					<option value={category}>{category.charAt(0).toUpperCase() + category.slice(1)}</option>
+				{/each}
+			</select>
+		</div>
+
+		<div class="flex flex-col">
+			<!-- svelte-ignore a11y_label_has_associated_control -->
+			<label class="text-sm font-medium text-gray-700 mb-1">Sort By</label>
+			<select
+				bind:value={selectedSort}
+				onchange={handleFilterChange}
+				class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+			>
+				{#each sortOptions as option}
+					<option value={option.value}>{option.label}</option>
+				{/each}
+			</select>
+		</div>
+	</div>
+
 	<div
-		class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 p-4 overflow-y-scroll h-screen no-scrollbar"
+		class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 p-4 overflow-y-scroll h-screen no-scrollbar w-full"
 		{onscroll}
 	>
 		{#each businesses as restaurant}
@@ -59,6 +165,7 @@
 			/>
 		{/each}
 	</div>
+
 	{#if loading}
 		<div transition:slide class="relative h-10 w-full flex justify-center">
 			<div class="p-4 absolute bottom-0">
