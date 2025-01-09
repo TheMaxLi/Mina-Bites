@@ -13,7 +13,7 @@ export const actions = {
 			return { error: createGroupError, success: false };
 		}
 		const groupResult = await createGroupResult.json();
-
+		// make default team
 		return { data: groupResult, success: true };
 	}
 };
