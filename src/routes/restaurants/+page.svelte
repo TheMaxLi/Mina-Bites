@@ -4,6 +4,8 @@
 	import RestaurantCard from '../../components/restaurantCard.svelte';
 	import Spinner from '../../components/spinner.svelte';
 	import { mightFail } from '@might/fail';
+	import TextInput from '../../components/TextInput.svelte';
+	import SelectOption from '../../components/SelectOption.svelte';
 
 	const { data } = $props();
 	let businesses = $state<Restaurant[]>(data.businesses);
@@ -24,7 +26,14 @@
 		{ label: '$$$', value: [3, 4] },
 		{ label: '$$$$', value: [4] }
 	];
-	const categoryOptions = ['japanese', 'italian', 'chinese', 'american', 'mexican'];
+	const categoryOptions = [
+		{ value: 'japanese', label: 'Japanese' },
+		{ value: 'italian', label: 'Italian' },
+		{ value: 'chinese', label: 'Chinese' },
+		{ value: 'american', label: 'American' },
+		{ value: 'mexican', label: 'Mexican' }
+	];
+
 	const sortOptions = [
 		{ value: 'best_match', label: 'Best Match' },
 		{ value: 'rating', label: 'Rating' },
@@ -96,18 +105,12 @@
 
 <div class="flex flex-col items-center w-full max-w-7xl mx-auto px-4">
 	<div class="w-full bg-white shadow-sm rounded-lg p-4 mb-4 grid grid-cols-1 md:grid-cols-4 gap-4">
-		<!-- Refactor these into a component -->
-		<div class="flex flex-col">
-			<!-- svelte-ignore a11y_label_has_associated_control -->
-			<label class="text-sm font-medium text-gray-700 mb-1">Search</label>
-			<input
-				type="text"
-				bind:value={search}
-				placeholder="Search..."
-				oninput={handleFilterChange}
-				class="mt-1 block w-full rounded-md border-gray-300 shadow-sm pl-1 focus:border-indigo-500 focus:ring-indigo-500"
-			/>
-		</div>
+		<TextInput
+			label="Search"
+			oninput={handleFilterChange}
+			placeholder="Search..."
+			bind:value={search}
+		/>
 		<div class="flex flex-col">
 			<!-- svelte-ignore a11y_label_has_associated_control -->
 			<label class="text-sm font-medium text-gray-700 mb-1">Price Range</label>
@@ -123,34 +126,19 @@
 			</select>
 		</div>
 
-		<div class="flex flex-col">
-			<!-- svelte-ignore a11y_label_has_associated_control -->
-			<label class="text-sm font-medium text-gray-700 mb-1">Category</label>
-			<select
-				bind:value={selectedCategory}
-				onchange={handleFilterChange}
-				class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-			>
-				<option value="">All Categories</option>
-				{#each categoryOptions as category}
-					<option value={category}>{category.charAt(0).toUpperCase() + category.slice(1)}</option>
-				{/each}
-			</select>
-		</div>
-
-		<div class="flex flex-col">
-			<!-- svelte-ignore a11y_label_has_associated_control -->
-			<label class="text-sm font-medium text-gray-700 mb-1">Sort By</label>
-			<select
-				bind:value={selectedSort}
-				onchange={handleFilterChange}
-				class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-			>
-				{#each sortOptions as option}
-					<option value={option.value}>{option.label}</option>
-				{/each}
-			</select>
-		</div>
+		<SelectOption
+			label="Category"
+			onchange={handleFilterChange}
+			bind:value={selectedCategory}
+			options={categoryOptions}
+			placeholder="All Categories"
+		/>
+		<SelectOption
+			label="Sort By"
+			onchange={handleFilterChange}
+			bind:value={selectedSort}
+			options={sortOptions}
+		/>
 	</div>
 
 	<div
