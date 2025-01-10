@@ -111,8 +111,6 @@
 			placeholder="Search..."
 			bind:value={search}
 		/>
-
-		<!-- make this multi select -->
 		<div class="flex flex-col">
 			<!-- svelte-ignore a11y_label_has_associated_control -->
 			<label class="text-sm font-medium text-gray-700 mb-1">Price Range</label>

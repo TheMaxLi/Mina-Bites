@@ -27,7 +27,6 @@
 				body: JSON.stringify({ groupId: user.currentGroupId, restaurant, mealType })
 			})
 		);
-		// add toast
 	};
 	const handleAddToFavorite = async (e: Event) => {
 		e.preventDefault();
@@ -60,7 +59,6 @@
 		handleClickOutside(e, '.menu-container', () => (showMenu ? (showMenu = false) : showMenu))}
 />
 
-<!-- obv make this go show more info on restaurant lol -->
 <a href="/" title={restaurant.name}>
 	<div class="rounded-lg shadow-md hover:shadow-lg bg-white h-full">
 		<div class="relative">
