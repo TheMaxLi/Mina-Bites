@@ -27,13 +27,18 @@
 				body: JSON.stringify({ groupId: user.currentGroupId, restaurant, mealType })
 			})
 		);
+		showMenu = false;
+		if (addError) {
+			return toast.error('Error adding to group' + addError.message);
+		}
+		toast(`${restaurant.name} has been added to your ${mealType} plans`);
 	};
 	const handleAddToFavorite = async (e: Event) => {
 		e.preventDefault();
 		e.stopPropagation();
 
 		if (!user) {
-			return toast('Please login or create an account first');
+			return toast.error('Please login or create an account first');
 		}
 		const [addError, addResult] = await mightFail(
 			fetch('api/favorites', {
@@ -42,7 +47,7 @@
 			})
 		);
 		if (addError) {
-			return toast('Could not add to favorites');
+			return toast.error('Error adding to favorites' + addError.message);
 		}
 		await invalidateAll();
 		toast(`${restaurant.name} has been added to favorites`);
@@ -56,7 +61,9 @@
 
 <svelte:window
 	onclick={(e) =>
-		handleClickOutside(e, '.menu-container', () => (showMenu ? (showMenu = false) : showMenu))}
+		handleClickOutside(e, `.menu-container${restaurant.id}`, () =>
+			showMenu ? (showMenu = false) : showMenu
+		)}
 />
 
 <a href="/" title={restaurant.name}>
@@ -76,7 +83,7 @@
 			</button>
 		</div>
 		<div class="p-4">
-			<div class="flex justify-between items-start mb-2 menu-container relative">
+			<div class="flex justify-between items-start mb-2 menu-container{restaurant.id} relative">
 				<h3 class="text-lg font-semibold">{restaurant.name}</h3>
 				<button
 					name="Add to group"
