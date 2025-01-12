@@ -2,7 +2,7 @@
 	import { invalidateAll } from '$app/navigation';
 	import type { DbRestaurant } from '$lib/types';
 	import { Star, Trash2 } from 'lucide-svelte';
-	import { toast } from 'svelte-sonner';
+	// import { toast } from 'svelte-sonner';
 
 	const {
 		rec
@@ -27,9 +27,9 @@
 			if (!response.ok) throw new Error('Failed to remove favorite');
 
 			await invalidateAll();
-			toast.success('Restaurant removed from favorites');
+			// toast.success('Restaurant removed from favorites');
 		} catch (error) {
-			toast.error('Failed to remove from favorites');
+			// toast.error('Failed to remove from favorites');
 		}
 	}
 

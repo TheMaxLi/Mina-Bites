@@ -1,11 +1,11 @@
 <script lang="ts">
 	import type { Restaurant } from '$lib/types';
 	import { slide } from 'svelte/transition';
-	import RestaurantCard from '../../components/restaurantCard.svelte';
-	import Spinner from '../../components/spinner.svelte';
+	import RestaurantCard from '../../lib/components/restaurantCard.svelte';
+	import Spinner from '../../lib/components/spinner.svelte';
 	import { mightFail } from '@might/fail';
-	import TextInput from '../../components/TextInput.svelte';
-	import SelectOption from '../../components/SelectOption.svelte';
+	import TextInput from '../../lib/components/TextInput.svelte';
+	import SelectOption from '../../lib/components/SelectOption.svelte';
 
 	const { data } = $props();
 	let businesses = $state<Restaurant[]>(data.businesses);

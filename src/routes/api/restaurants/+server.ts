@@ -2,7 +2,7 @@ import { env } from '$env/dynamic/private';
 import type { Restaurant } from '$lib/types';
 import { json } from '@sveltejs/kit';
 
-export async function GET({ request, url }: { request: Request; url: URL }) {
+export async function GET({ url }: { request: Request; url: URL }) {
 	const offset = url.searchParams.get('offset') || '0';
 	const limit = url.searchParams.get('limit') || 20;
 	const price = url.searchParams.get('price');

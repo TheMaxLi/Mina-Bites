@@ -1,4 +1,4 @@
-import { getUserFromRequest } from '$lib';
+import { getUserFromRequest } from '$lib/utils/getKindeUser';
 import { getGroups } from '$lib/server/db/groups';
 import { createOrGetUser } from '$lib/server/db/user';
 import { kindeAuthClient, type SessionManager } from '@kinde-oss/kinde-auth-sveltekit';

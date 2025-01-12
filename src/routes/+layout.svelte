@@ -2,11 +2,10 @@
 	import '../app.css';
 	import { page } from '$app/state';
 	import { Home, MapPin, User, Bookmark } from 'lucide-svelte';
-	import { setUserState } from '$lib/state.svelte';
-	import SearchableDropDown from '../components/SearchableDropDown.svelte';
+	import { setUserState } from '$lib/state/user.state.svelte';
+	import SearchableDropDown from '../lib/components/SearchableDropDown.svelte';
 	import { mightFail } from '@might/fail';
 	import { invalidateAll } from '$app/navigation';
-	import { Toaster } from 'svelte-sonner';
 
 	let { children, data } = $props();
 
@@ -34,8 +33,6 @@
 		return { id: g.id, name: g.name };
 	});
 </script>
-
-<Toaster />
 
 <div class="flex flex-col min-h-screen">
 	{#if data.user}
@@ -97,16 +94,8 @@
 			{@render children()}
 		</main>
 	{:else}
-		<main class="flex-1">
+		<main class="flex-1 md: pt-[72px]">
 			{@render children()}
 		</main>
 	{/if}
 </div>
-
-<style>
-	@media (max-width: 767px) {
-		main {
-			padding-top: 72px;
-		}
-	}
-</style>

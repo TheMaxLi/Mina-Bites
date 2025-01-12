@@ -1,7 +1,4 @@
 import { json, type RequestHandler } from '@sveltejs/kit';
-import { db } from '$lib/server/db';
-import { eq, and } from 'drizzle-orm';
-import { favorites } from '$lib/server/db/schema';
 import { addToFavorites, deleteFavorite } from '$lib/server/db/favorites';
 import { createOrGetRestaurant } from '$lib/server/db/restaurants';
 import type { NewRestaurant, Restaurant } from '$lib/types';

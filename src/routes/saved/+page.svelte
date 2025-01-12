@@ -1,8 +1,6 @@
 <!-- src/routes/favorites/+page.svelte -->
 <script lang="ts">
-	import { invalidateAll } from '$app/navigation';
-	import { Star, Trash2, DollarSign } from 'lucide-svelte';
-	import { toast } from 'svelte-sonner';
+	import { Star } from 'lucide-svelte';
 	import SaveCard from './saveCard.svelte';
 
 	const { data } = $props();

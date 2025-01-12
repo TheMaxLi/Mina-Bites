@@ -1,6 +1,6 @@
-import { getUserFromRequest } from '$lib';
 import { getGroups, getRecommendedRestaurantsForGroup } from '$lib/server/db/groups';
 import { createOrGetUser } from '$lib/server/db/user';
+import { getUserFromRequest } from '$lib/utils/getKindeUser';
 import { kindeAuthClient, type SessionManager } from '@kinde-oss/kinde-auth-sveltekit';
 import { mightFail } from '@might/fail';
 import type { RequestEvent } from '@sveltejs/kit';

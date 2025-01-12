@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { Settings, PlusCircle, LogOut, Star, Users } from 'lucide-svelte';
-	import { getUserState } from '$lib/state.svelte';
-	import GroupSelfie from '../../components/GroupSelfie.svelte';
-	import { handleClickOutside } from '$lib/clickOutside';
+	import { getUserState } from '$lib/state/user.state.svelte';
+	import GroupSelfie from '../../lib/components/GroupSelfie.svelte';
+	import { handleClickOutside } from '$lib/utils/clickOutside';
 
 	const { data } = $props();
 

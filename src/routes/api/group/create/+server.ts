@@ -1,6 +1,6 @@
 import { createGroup, joinGroup } from '$lib/server/db/groups.js';
 import { setCurrentGroup } from '$lib/server/db/user.js';
-import { getUserState } from '$lib/state.svelte.js';
+import { getUserState } from '$lib/state/user.state.svelte.js';
 import { mightFail } from '@might/fail';
 import { json } from '@sveltejs/kit';
 

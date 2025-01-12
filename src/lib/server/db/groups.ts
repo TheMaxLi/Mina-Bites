@@ -2,7 +2,7 @@ import { eq } from 'drizzle-orm';
 import { db } from '.';
 import { groupMembers, groups, restaurantRecommendations, restaurants, users } from './schema';
 import type { Group, GroupMember } from '$lib/types';
-import { generateRandomCode } from '$lib/generateRandomCode';
+import { generateRandomCode } from '$lib/utils/generateRandomCode';
 
 export interface GetGroupGroupMember extends GroupMember {
 	image: string | null;

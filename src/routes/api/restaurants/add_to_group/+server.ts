@@ -1,4 +1,3 @@
-import { createGroup } from '$lib/server/db/groups.js';
 import { addRestaurantToGroup, createOrGetRestaurant } from '$lib/server/db/restaurants.js';
 import type { MealType, NewRestaurant, Restaurant } from '$lib/types.js';
 import { mightFail } from '@might/fail';

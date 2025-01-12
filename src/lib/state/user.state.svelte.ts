@@ -1,5 +1,5 @@
 import { getContext, setContext } from 'svelte';
-import type { User } from './types';
+import type { User } from '../types';
 
 const USER_CTX = 'USER_CTX';
 

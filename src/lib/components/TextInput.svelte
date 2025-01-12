@@ -10,7 +10,7 @@
 	}: {
 		label: string;
 		value: string;
-		oninput: () => {};
+		oninput: () => void;
 		placeholder: string;
 		autocomplete?: FullAutoFill | null;
 	} = $props();

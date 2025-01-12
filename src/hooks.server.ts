@@ -1,4 +1,4 @@
-import { logger } from '$lib/logger';
+import { logger } from '$lib/utils/logger';
 import { sessionHooks, type Handler } from '@kinde-oss/kinde-auth-sveltekit';
 
 export const handle: Handler = async ({ event, resolve }) => {

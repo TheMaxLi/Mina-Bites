@@ -1,10 +1,9 @@
 <script lang="ts">
 	import { invalidateAll } from '$app/navigation';
-	import { handleClickOutside } from '$lib/clickOutside';
 	import type { MealType, Restaurant, User } from '$lib/types';
+	import { handleClickOutside } from '$lib/utils/clickOutside';
 	import { mightFail } from '@might/fail';
 	import { Heart, CirclePlus, Star } from 'lucide-svelte';
-	import { toast } from 'svelte-sonner';
 
 	let {
 		restaurant,
@@ -19,7 +18,10 @@
 		e.stopPropagation();
 
 		if (!user) {
-			return toast('Please login or create an account first');
+			// return addToast({
+			// 	message: 'Please login or create an account first'
+			// });
+			return;
 		}
 		const [addError, addResult] = await mightFail(
 			fetch('api/restaurants/add_to_group', {
@@ -29,16 +31,20 @@
 		);
 		showMenu = false;
 		if (addError) {
-			return toast.error('Error adding to group' + addError.message);
+			// addToast({
+			// 	message: 'Error adding to group' + addError.message
+			// });
 		}
-		toast(`${restaurant.name} has been added to your ${mealType} plans`);
+		// addToast({
+		// 	message: `${restaurant.name} has been added to your ${mealType} plans`
+		// });
 	};
 	const handleAddToFavorite = async (e: Event) => {
 		e.preventDefault();
 		e.stopPropagation();
 
 		if (!user) {
-			return toast.error('Please login or create an account first');
+			// return toast.error('Please login or create an account first');
 		}
 		const [addError, addResult] = await mightFail(
 			fetch('api/favorites', {
@@ -47,10 +53,10 @@
 			})
 		);
 		if (addError) {
-			return toast.error('Error adding to favorites' + addError.message);
+			// return toast.error('Error adding to favorites' + addError.message);
 		}
 		await invalidateAll();
-		toast(`${restaurant.name} has been added to favorites`);
+		// toast(`${restaurant.name} has been added to favorites`);
 	};
 	const handleOpenMenu = (e: Event) => {
 		e.preventDefault();
