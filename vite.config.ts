@@ -2,11 +2,5 @@ import { sveltekit } from '@sveltejs/kit/vite';
 import { defineConfig } from 'vite';
 
 export default defineConfig({
-	plugins: [sveltekit()],
-	optimizeDeps: {
-		include: ['svelte-sonner']
-	},
-	ssr: {
-		noExternal: ['svelte-sonner']
-	}
+	plugins: [sveltekit()]
 });
